@@ -1,0 +1,65 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :first_name, class: "control-label" %>
+    <%= text_input f, :first_name, class: "form-control" %>
+    <%= error_tag f, :first_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :last_name, class: "control-label" %>
+    <%= text_input f, :last_name, class: "form-control" %>
+    <%= error_tag f, :last_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :email, class: "control-label" %>
+    <%= text_input f, :email, class: "form-control" %>
+    <%= error_tag f, :email %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :language, class: "control-label" %>
+    <%= text_input f, :language, class: "form-control" %>
+    <%= error_tag f, :language %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :password, class: "control-label" %>
+    <%= text_input f, :password, class: "form-control" %>
+    <%= error_tag f, :password %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :password_confirmation, class: "control-label" %>
+    <%= text_input f, :password_confirmation, class: "form-control" %>
+    <%= error_tag f, :password_confirmation %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :school_id, class: "control-label" %>
+    <%= select f, :school_id, Enum.map(@schools, &{&1.name, &1.id})%>
+    <%= error_tag f, :school_id %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :class, class: "control-label" %>
+    <%= text_input f, :class, class: "form-control" %>
+    <%= error_tag f, :class %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :role, class: "control-label" %>
+    <%= text_input f, :role, class: "form-control" %>
+    <%= error_tag f, :role %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

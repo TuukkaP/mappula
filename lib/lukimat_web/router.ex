@@ -17,6 +17,10 @@ defmodule LukimatWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    resources "/users", UserController
+    resources "/questions", QuestionController
+    resources "/answers", AnswerController
+    resources "/schools", SchoolController
   end
 
   # Other scopes may use custom stacks.

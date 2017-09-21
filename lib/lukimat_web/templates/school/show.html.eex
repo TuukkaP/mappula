@@ -1,0 +1,13 @@
+<h2>Show School</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @school.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: school_path(@conn, :edit, @school) %></span>
+<span><%= link "Back", to: school_path(@conn, :index) %></span>

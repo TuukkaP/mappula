@@ -1,0 +1,28 @@
+<h2>Show Question</h2>
+
+<ul>
+
+  <li>
+    <strong>Level:</strong>
+    <%= @question.level %>
+  </li>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @question.content %>
+  </li>
+
+  <li>
+    <strong>Correct answer:</strong>
+    <%= @question.correct_answer %>
+  </li>
+
+  <li>
+    <strong>Choices:</strong>
+    <%= @question.choices %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: question_path(@conn, :edit, @question) %></span>
+<span><%= link "Back", to: question_path(@conn, :index) %></span>
