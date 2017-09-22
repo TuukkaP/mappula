@@ -31,19 +31,19 @@
 
   <div class="form-group">
     <%= label f, :password, class: "control-label" %>
-    <%= text_input f, :password, class: "form-control" %>
+    <%= password_input f, :password, class: "form-control" %>
     <%= error_tag f, :password %>
   </div>
 
   <div class="form-group">
     <%= label f, :password_confirmation, class: "control-label" %>
-    <%= text_input f, :password_confirmation, class: "form-control" %>
+    <%= password_input f, :password_confirmation, class: "form-control" %>
     <%= error_tag f, :password_confirmation %>
   </div>
 
   <div class="form-group">
     <%= label f, :school_id, class: "control-label" %>
-    <%= select f, :school_id, Enum.map(@schools, &{&1.name, &1.id})%>
+    <%= select f, :school_id, Enum.map(@schools, &{&1.name, &1.id}), class: "form-control" %>
     <%= error_tag f, :school_id %>
   </div>
 

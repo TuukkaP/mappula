@@ -105,4 +105,12 @@ defmodule Lukimat.Accounts do
   def with_schools(users) do
     Repo.preload users, :school
   end 
+
+  def with_schools(%User{} = user) do
+    Repo.preload user, :school
+  end 
+
+  def with_answers(%User{} = user) do
+    Repo.preload user, :answers
+  end
 end

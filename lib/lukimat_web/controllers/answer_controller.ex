@@ -4,6 +4,7 @@ defmodule LukimatWeb.AnswerController do
   alias Lukimat.Questionnaires
   alias Lukimat.Questionnaires.Answer
 
+  plug LukimatWeb.CurrentUser
   def index(conn, _params) do
     answers = Questionnaires.list_answers()
     render(conn, "index.html", answers: answers)

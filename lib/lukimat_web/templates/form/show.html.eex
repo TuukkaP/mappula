@@ -1,0 +1,18 @@
+<h2>Show Form</h2>
+
+<ul>
+
+  <li>
+    <strong>Level:</strong>
+    <%= @form.level %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @form.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: form_path(@conn, :edit, @form) %></span>
+<span><%= link "Back", to: form_path(@conn, :index) %></span>

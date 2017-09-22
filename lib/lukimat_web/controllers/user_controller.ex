@@ -6,6 +6,8 @@ defmodule LukimatWeb.UserController do
   alias Lukimat.Schools
   alias Lukimat.Accounts.User
 
+  plug :assign_schools, only: [:new, :edit, :create, :edit]
+
   def index(conn, _params) do
     users = 
       Accounts.list_users()
@@ -16,8 +18,7 @@ defmodule LukimatWeb.UserController do
 
   def new(conn, _params) do
     changeset = Accounts.change_user(%User{})
-    schools = Schools.list_schools()
-    render(conn, "new.html", changeset: changeset, schools: schools)
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -38,9 +39,8 @@ defmodule LukimatWeb.UserController do
 
   def edit(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
-    schools = Schools.list_schools()
     changeset = Accounts.change_user(user)
-    render(conn, "edit.html", user: user, changeset: changeset, schools: schools)
+    render(conn, "edit.html", user: user, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
@@ -63,5 +63,10 @@ defmodule LukimatWeb.UserController do
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: user_path(conn, :index))
+  end
+
+  defp assign_schools(conn, _params) do
+    schools = Schools.list_schools()
+    assign(conn, :schools, schools)
   end
 end

@@ -1,0 +1,8 @@
+/* This file is for your main application css. */
+@import "node_modules/bootstrap/scss/bootstrap";
+
+.container {
+	&-main {
+		margin-top: 2.5em;
+	}
+}

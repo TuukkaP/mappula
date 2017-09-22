@@ -12,24 +12,81 @@
   </head>
 
   <body>
-    <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
+    <div class="container container-main">
+      <nav class="navbar navbar-expand-lg navbar-light rounded" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="/">
+          <span class="badge badge-secondary d-inline-block align-top" style="background-color: #FFA62F;">Ä</span>
+          Äppylä
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item <%= active_path?(@conn, "users") %>">
+              <a class="nav-link" href="<%= user_path(@conn, :index) %>">Käyttäjät<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item <%= active_path?(@conn, "schools") %>">
+              <a class="nav-link" href="<%= school_path(@conn, :index) %>">Koulut</a>
+            </li>
+            <li class="nav-item <%= active_path?(@conn, "questions") %>">
+              <a class="nav-link" href="<%= question_path(@conn, :index) %>">Kysymykset</a>
+            </li>
+            <li class="nav-item <%= active_path?(@conn, "answers") %>">
+              <a class="nav-link" href="<%= answer_path(@conn, :index) %>">Vastaukset</a>
+            </li>
+            <li class="nav-item <%= active_path?(@conn, "forms") %>">
+              <a class="nav-link" href="<%= form_path(@conn, :index) %>">Lomakkeet</a>
+            </li>
           </ul>
-        </nav>
-        <span class="logo"></span>
-      </header>
+        </div>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    </li>
+        <ul class="navbar-nav my-2 my-lg-0">
+          <%= if assigns[:current_user] do %>
+            <li> <%= link "Sign out", to: session_path(@conn, :delete, 1), method: "delete" %>
+            <li class="nav-item <%= active_path?(@conn, "users/new") %>">
+          <% else %>
+              <a class="nav-link" href="<%= user_path(@conn, :new) %>">Rekisteröidy</a>
+            </li>
+            <li class="nav-item <%= active_path?(@conn, "sessions/new") %>">
+              <a class="nav-link" href="<%= session_path(@conn, :new) %>">Kirjaudu sisään</a>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
 
-      <main role="main">
+      <%= cond do %>
+        <% get_flash(@conn, :info) -> %>
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <%= get_flash(@conn, :info) %>
+          </div>
+        <% get_flash(@conn, :error) -> %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <%= get_flash(@conn, :error) %>
+          </div>
+        <% assigns[:current_user] -> %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <%= @current_user.email %>
+          </div>
+
+        <% true -> %>
+          <! --- nothing --- !>
+      <% end %>
+
+      <main role="main" class="jumbotron bg-light mt-4">
         <%= render @view_module, @view_template, assigns %>
       </main>
-
-    </div> <!-- /container -->
+    </div>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

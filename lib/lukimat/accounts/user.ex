@@ -24,21 +24,29 @@ defmodule Lukimat.Accounts.User do
   def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:first_name, :last_name, :email, :language, :password, :password_confirmation, :class, :role, :school_id])
-    |> validate_required([:first_name, :last_name, :email, :language, :class, :role])
+    |> validate_required([:email, :language, :class, :role])
     |> validate_format(:email, ~r/@/)
-    |> validate_length(:password, min: 6, max: 100)
+    |> downcase_email
+    |> validate_length(:password, min: 6, max: 32)
     |> validate_confirmation(:password, message: "does not match password")
+    |> encrypt_password
   end
 
-
-  defp password_and_confirmation_match(changeset) do
-    validate_change(changeset, :password, fn _, url ->
-      case  do
-        true -> []
-        false -> [{field, options[:message] || "Unexpected URL"}]
-      end
-    end)
-
+  defp encrypt_password(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
+        put_change(changeset, :encrypted_password, Comeonin.Bcrypt.hashpwsalt(password))
+      _ ->
+        changeset
+    end
   end
 
+  defp downcase_email(changeset) do
+    case changeset do
+      %Ecto.Changeset{changes: %{email: email}} ->
+        put_change(changeset, :email, String.downcase(email))
+      _ ->
+        changeset
+    end
+  end
 end

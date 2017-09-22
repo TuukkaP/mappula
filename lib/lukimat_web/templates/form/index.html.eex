@@ -1,0 +1,30 @@
+<h2>Listing Forms</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Level</th>
+      <th>Name</th>
+      <th>Number of questions</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for form <- @forms do %>
+    <tr>
+      <td><%= form.level %></td>
+      <td><%= form.name %></td>
+      <td><%= form.questions.length %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: form_path(@conn, :show, form), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: form_path(@conn, :edit, form), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: form_path(@conn, :delete, form), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Form", to: form_path(@conn, :new) %></span>

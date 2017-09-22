@@ -12,12 +12,13 @@ defmodule Lukimat.Questionnaires.Question do
 
     timestamps()
     has_many :answers, Lukimat.Questionnaires.Answer
+    belongs_to :form, Lukimat.Questionnaires.Form
   end
 
   @doc false
   def changeset(%Question{} = question, attrs) do
     question
-    |> cast(attrs, [:level, :content, :correct_answer, :choices])
-    |> validate_required([:level, :content, :correct_answer, :choices])
+    |> cast(attrs, [:content, :correct_answer, :choices])
+    |> validate_required([:content, :correct_answer, :choices])
   end
 end
