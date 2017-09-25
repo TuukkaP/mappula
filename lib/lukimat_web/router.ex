@@ -36,7 +36,9 @@ defmodule LukimatWeb.Router do
     resources "/answers", AnswerController
     resources "/schools", SchoolController
     resources "/users", UserController
-    resources "/forms", FormController
+    resources "/choices", ChoiceController
+    resources "/forms", FormController 
+    resources "/forms/:form_id/fill", FillFormController, only: [:index, :new, :create]
   end
 
   # Other scopes may use custom stacks.

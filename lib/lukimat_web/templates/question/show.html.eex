@@ -17,11 +17,6 @@
     <%= @question.correct_answer %>
   </li>
 
-  <li>
-    <strong>Choices:</strong>
-    <%= @question.choices %>
-  </li>
-
 </ul>
 
 <span><%= link "Edit", to: question_path(@conn, :edit, @question) %></span>

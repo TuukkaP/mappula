@@ -294,11 +294,115 @@ defmodule Lukimat.Questionnaires do
     Form.changeset(form, %{})
   end
 
-  def with_questions(%Form{} = form) do
-    Repo.preload form, :questions
+  def with_questions(forms) do
+    Repo.preload forms, :questions
+  end
+
+  def with_questions_and_choices(form) do
+    Repo.preload(form, [questions: [:choices]])
   end
 
   def with_answers(%Question{} = question) do
     Repo.preload question, :answers
+  end
+
+  def with_choices(questions) do
+    Repo.preload questions, :choices
+  end
+
+  alias Lukimat.Questionnaires.Choice
+
+  @doc """
+  Returns the list of choices.
+
+  ## Examples
+
+      iex> list_choices()
+      [%Choice{}, ...]
+
+  """
+  def list_choices do
+    Repo.all(Choice)
+  end
+
+  @doc """
+  Gets a single choice.
+
+  Raises `Ecto.NoResultsError` if the Choice does not exist.
+
+  ## Examples
+
+      iex> get_choice!(123)
+      %Choice{}
+
+      iex> get_choice!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_choice!(id), do: Repo.get!(Choice, id)
+
+  @doc """
+  Creates a choice.
+
+  ## Examples
+
+      iex> create_choice(%{field: value})
+      {:ok, %Choice{}}
+
+      iex> create_choice(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_choice(attrs \\ %{}) do
+    %Choice{}
+    |> Choice.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a choice.
+
+  ## Examples
+
+      iex> update_choice(choice, %{field: new_value})
+      {:ok, %Choice{}}
+
+      iex> update_choice(choice, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_choice(%Choice{} = choice, attrs) do
+    choice
+    |> Choice.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Choice.
+
+  ## Examples
+
+      iex> delete_choice(choice)
+      {:ok, %Choice{}}
+
+      iex> delete_choice(choice)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_choice(%Choice{} = choice) do
+    Repo.delete(choice)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking choice changes.
+
+  ## Examples
+
+      iex> change_choice(choice)
+      %Ecto.Changeset{source: %Choice{}}
+
+  """
+  def change_choice(%Choice{} = choice) do
+    Choice.changeset(choice, %{})
   end
 end

@@ -38,6 +38,9 @@
             <li class="nav-item <%= active_path?(@conn, "forms") %>">
               <a class="nav-link" href="<%= form_path(@conn, :index) %>">Lomakkeet</a>
             </li>
+            <li class="nav-item <%= active_path?(@conn, "choices") %>">
+              <a class="nav-link" href="<%= choice_path(@conn, :index) %>">Vastausvaihtoehdot</a>
+            </li>
           </ul>
         </div>
 
@@ -71,14 +74,6 @@
             </button>
             <%= get_flash(@conn, :error) %>
           </div>
-        <% assigns[:current_user] -> %>
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <%= @current_user.email %>
-          </div>
-
         <% true -> %>
           <! --- nothing --- !>
       <% end %>

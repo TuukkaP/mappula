@@ -5,7 +5,7 @@ defmodule Lukimat.Questionnaires.Answer do
 
 
   schema "answers" do
-    field :answer, :integer
+    field :answer, :string
     field :is_correct, :boolean, default: false
 
     timestamps()

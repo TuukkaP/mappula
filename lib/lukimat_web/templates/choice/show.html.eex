@@ -1,0 +1,18 @@
+<h2>Show Choice</h2>
+
+<ul>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @choice.content %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @choice.url %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: choice_path(@conn, :edit, @choice) %></span>
+<span><%= link "Back", to: choice_path(@conn, :index) %></span>

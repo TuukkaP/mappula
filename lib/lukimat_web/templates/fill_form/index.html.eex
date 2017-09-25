@@ -1,0 +1,9 @@
+<h2>Vastaa</h2>
+
+<ul>
+<%= for form <- @forms do %>
+  <li>
+    <%= link form.name, to: fill_form_path(@conn, :new, form.id), class: "btn btn-default btn-xs" %>
+  </li>
+<% end %>
+</ul>

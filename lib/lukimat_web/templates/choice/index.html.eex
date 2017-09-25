@@ -1,0 +1,30 @@
+<h2>Listing Choices</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Question ID</th>
+      <th>Content</th>
+      <th>Url</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for choice <- @choices do %>
+    <tr>
+      <td><%= choice.question_id %></td>
+      <td><%= choice.content %></td>
+      <td><%= choice.url %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: choice_path(@conn, :show, choice), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: choice_path(@conn, :edit, choice), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: choice_path(@conn, :delete, choice), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Choice", to: choice_path(@conn, :new) %></span>

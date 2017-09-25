@@ -17,7 +17,11 @@
       <td><%= question.level %></td>
       <td><%= question.content %></td>
       <td><%= question.correct_answer %></td>
-      <td><%= question.choices %></td>
+      <td>
+        <%= for choice <- question.choices do %>
+          <%= choice.content %>,
+        <% end %>
+      </td>
 
       <td class="text-right">
         <span><%= link "Show", to: question_path(@conn, :show, question), class: "btn btn-default btn-xs" %></span>

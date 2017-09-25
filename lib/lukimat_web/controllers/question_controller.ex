@@ -5,7 +5,9 @@ defmodule LukimatWeb.QuestionController do
   alias Lukimat.Questionnaires.Question
 
   def index(conn, _params) do
-    questions = Questionnaires.list_questions()
+    questions = 
+      Questionnaires.list_questions()
+      |> Questionnaires.with_choices
     render(conn, "index.html", questions: questions)
   end
 
