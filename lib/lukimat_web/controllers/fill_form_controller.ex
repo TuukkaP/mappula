@@ -38,6 +38,11 @@ defmodule LukimatWeb.FillFormController do
     end
   end
 
+  def completed(conn, _params) do
+      conn
+      |> put_flash(:info, "Answer created successfully.")
+      |> redirect(to: fill_form_path(conn, :index))
+  end
   defp build_answers(current_user, form, %{"answers" => answers}) do
     Enum.map(form.questions,
       fn(%{id: id, type: type, correct_answer: correct_answer}) ->

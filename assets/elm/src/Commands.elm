@@ -7,18 +7,31 @@ import Json.Decode.Pipeline as JsonPipeline exposing (decode, required)
 import Json.Encode as Encode
 import Models exposing (Choice, Question, Answer, Model)
 import Messages exposing (Msg)
+import Debug exposing (crash)
 
 
-fetchQuestions : Cmd Msg
-fetchQuestions =
-    Http.get fetchQuestionsUrl questionsDecoder
+fetchQuestions : String -> String -> Cmd Msg
+fetchQuestions origin path =
+    Http.get (fetchQuestionsUrl origin path) questionsDecoder
         |> RemoteData.sendRequest
         |> Cmd.map Messages.OnFetchQuestions
 
 
-fetchQuestionsUrl : String
-fetchQuestionsUrl =
-    "http://localhost:4000/api/forms/1/questions"
+fetchQuestionsUrl : String -> String -> String
+fetchQuestionsUrl origin path =
+    let
+        formId =
+            path
+                |> String.split "/"
+                |> List.drop 2
+                |> List.head
+    in
+        case formId of
+            Just id ->
+                origin ++ "/api/forms/" ++ id ++ "/questions"
+
+            Nothing ->
+                crash "Faulty form id"
 
 
 questionsDecoder : Decode.Decoder (List Question)
@@ -59,9 +72,9 @@ answerDecoder =
         |> JsonPipeline.required "answer" Decode.string
 
 
-saveAnswersUrl : String
-saveAnswersUrl =
-    "http://localhost:4000/api/answers"
+saveAnswersUrl : String -> String
+saveAnswersUrl origin =
+    origin ++ "/api/answers"
 
 
 saveAnswersRequest : Model -> Http.Request (List Answer)
@@ -72,7 +85,7 @@ saveAnswersRequest model =
         , headers = []
         , method = "POST"
         , timeout = Nothing
-        , url = saveAnswersUrl
+        , url = saveAnswersUrl model.origin
         , withCredentials = False
         }
 

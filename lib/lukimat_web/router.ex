@@ -47,7 +47,8 @@ defmodule LukimatWeb.Router do
     resources "/choices", ChoiceController
     resources "/forms", FormController
     resources "/fill", FillFormController, only: [:index]
-    resources "/forms/:form_id/fill", FillFormController, only: [:new, :create]
+    resources "/forms/:form_id/fill", FillFormController, only: [:new, :create, :completed]
+    get "/forms/:form_id/fill/completed", FillFormController, :completed
   end
 
   scope "/api", LukimatWeb do
@@ -55,5 +56,6 @@ defmodule LukimatWeb.Router do
     resources "/forms", Api.FormController, only: [:show]
     resources "/forms/:form_id/questions", Api.QuestionController, only: [:index]
     resources "/answers", Api.AnswerController, only: [:create]
+    resources "/forms/:form_id/fill", Api.AnswerController, only: [:create]
   end
 end

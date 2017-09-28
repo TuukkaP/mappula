@@ -3,12 +3,19 @@ module Models exposing (..)
 import RemoteData exposing (WebData)
 
 
-initialModel : Model
-initialModel =
+initialModel : Flags -> Model
+initialModel flags =
     { response = RemoteData.Loading
     , questions = []
     , currentQuestion = Nothing
     , answers = []
+    , origin = flags.origin
+    }
+
+
+type alias Flags =
+    { origin : String
+    , path : String
     }
 
 
@@ -54,4 +61,5 @@ type alias Model =
     , questions : List Question
     , currentQuestion : Maybe Question
     , answers : List Answer
+    , origin : String
     }

@@ -39,4 +39,13 @@ defmodule LukimatWeb.Api.Serializer do
       }
     end)
   end
+
+  def answers_to_json(answers) do
+    Enum.map(answers, fn %{"question_id" => question_id, "answer" => answer } ->
+      %{
+        question_id: question_id,
+        answer: answer
+      }
+    end)
+  end
 end

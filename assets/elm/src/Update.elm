@@ -5,6 +5,7 @@ import Models exposing (Model, Choice, Question, Answer)
 import Messages exposing (Msg)
 import Commands exposing (saveAnswerCmd)
 import Debug exposing (log)
+import Navigation exposing (load)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -27,8 +28,7 @@ update msg model =
                             ( next, saveAnswerCmd next )
 
         Messages.OnAnswersPost (Ok answers) ->
-            log "POST OK"
-                ( model, Cmd.none )
+            ( model, load "completed" )
 
         Messages.OnAnswersPost (Err error) ->
             log (toString error)

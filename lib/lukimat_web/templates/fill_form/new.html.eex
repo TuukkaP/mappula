@@ -1,28 +1,8 @@
+<script>
+window.formId = 123;
+</script>
+
 <h2><%= @form.name %></h2>
 
-<%= form_for @conn, fill_form_path(@conn, :create, @form.id), [as: :answers], fn f -> %>
-  <%= for question <- @form.questions do %>
-    <div class="form-group">
-        <%= inputs_for f, :questions, [as: "answers[#{question.id}]", id: "answers[#{question.id}]"], fn q -> %>
-          <label> <%= question.content %> </label>
-          <div class="form-group">
-            <%= for choice <- Enum.sort(question.choices, fn(p, c) -> p.id <= c.id end) do %>
-              <%= if question.type == "multiple_choice" do %>
-                  <label class="form-check-label">
-                    <%= radio_button(q, String.to_atom(question.type), choice.content) %>
-                    <%= choice.content %>
-                    <%= img_tag Lukimat.ChoiceImage.url({choice.image, choice}, :original), height: "200px" %>
-                  </label>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
-
-    </div>
-
-  <% end %>
-  <%= submit "Submit" %>
-<% end %>
-
-<div id="elm_target">
+<div id="elm_form">
 </div>

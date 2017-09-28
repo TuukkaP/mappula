@@ -1,21 +1,21 @@
 module Main exposing (..)
 
-import Html exposing (program)
-import Models exposing (Model, initialModel)
+import Html exposing (programWithFlags)
+import Models exposing (Model, Flags, initialModel)
 import Commands exposing (fetchQuestions)
 import Messages exposing (..)
 import Update exposing (update)
 import View exposing (view)
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( initialModel, fetchQuestions )
+init : Flags -> ( Model, Cmd Msg )
+init flags =
+    ( initialModel flags, fetchQuestions flags.origin flags.path )
 
 
-main : Program Never Model Msg
+main : Program Flags Model Msg
 main =
-    Html.program
+    Html.programWithFlags
         { init = init
         , update = update
         , view = view

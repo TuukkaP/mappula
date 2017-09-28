@@ -20,7 +20,7 @@ maybeQuestion model =
             renderQuestion question
 
         Nothing ->
-            img [ src ("http://localhost:4000/images/loading.gif") ] []
+            img [ src (model.origin ++ "/images/loading.gif") ] []
 
 
 renderQuestion : Question -> Html Msg
@@ -33,7 +33,7 @@ renderQuestion question =
 
 renderChoices : List Choice -> Html Msg
 renderChoices choices =
-    div [ class "form-group" ] (List.map radio choices)
+    div [ class "form-group" ] (choices |> List.sortBy .id |> List.map radio)
 
 
 radio : Choice -> Html Msg

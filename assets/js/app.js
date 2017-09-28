@@ -23,9 +23,12 @@ import Elm from '../../priv/static/js/bundle.js';
 
 
 
-const elmDiv = document.querySelector('#elm_target');
+const elmDiv = document.querySelector('#elm_form');
 
 if (elmDiv) {
-	console.log(Elm.Main);
-  Elm.Main.embed(elmDiv);
+	console.log(Elm.Main, window.path);
+	Elm.Main.embed(elmDiv, {
+		origin: window.location.origin,
+		path: window.location.pathname
+		});
 }
