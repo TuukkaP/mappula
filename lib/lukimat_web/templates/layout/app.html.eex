@@ -13,7 +13,7 @@
 
   <body>
     <div class="container container-main">
-      <nav class="navbar navbar-expand-lg navbar-light rounded" style="background-color: #e3f2fd;">
+      <nav class="navbar navbar-expand-lg bg-primary navbar-dark rounded">
         <a class="navbar-brand" href="/">
           <span class="badge badge-secondary d-inline-block align-top" style="background-color: #FFA62F;">Ä</span>
           Äppylä
@@ -22,35 +22,37 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item <%= active_path?(@conn, "users") %>">
-              <a class="nav-link" href="<%= user_path(@conn, :index) %>">Käyttäjät<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item <%= active_path?(@conn, "schools") %>">
-              <a class="nav-link" href="<%= school_path(@conn, :index) %>">Koulut</a>
-            </li>
-            <li class="nav-item <%= active_path?(@conn, "questions") %>">
-              <a class="nav-link" href="<%= question_path(@conn, :index) %>">Kysymykset</a>
-            </li>
-            <li class="nav-item <%= active_path?(@conn, "answers") %>">
-              <a class="nav-link" href="<%= answer_path(@conn, :index) %>">Vastaukset</a>
-            </li>
-            <li class="nav-item <%= active_path?(@conn, "forms") %>">
-              <a class="nav-link" href="<%= form_path(@conn, :index) %>">Lomakkeet</a>
-            </li>
-            <li class="nav-item <%= active_path?(@conn, "choices") %>">
-              <a class="nav-link" href="<%= choice_path(@conn, :index) %>">Vastausvaihtoehdot</a>
-            </li>
-          </ul>
+          <%= if assigns[:current_user] do %>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item <%= active_path?(@conn, "users") %>">
+                <a class="nav-link" href="<%= user_path(@conn, :index) %>">Käyttäjät<span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item <%= active_path?(@conn, "schools") %>">
+                <a class="nav-link" href="<%= school_path(@conn, :index) %>">Koulut</a>
+              </li>
+              <li class="nav-item <%= active_path?(@conn, "questions") %>">
+                <a class="nav-link" href="<%= question_path(@conn, :index) %>">Kysymykset</a>
+              </li>
+              <li class="nav-item <%= active_path?(@conn, "answers") %>">
+                <a class="nav-link" href="<%= answer_path(@conn, :index) %>">Vastaukset</a>
+              </li>
+              <li class="nav-item <%= active_path?(@conn, "forms") %>">
+                <a class="nav-link" href="<%= form_path(@conn, :index) %>">Lomakkeet</a>
+              </li>
+              <li class="nav-item <%= active_path?(@conn, "choices") %>">
+                <a class="nav-link" href="<%= choice_path(@conn, :index) %>">Vastausvaihtoehdot</a>
+              </li>
+            </ul>
+          <% end %>
         </div>
 
     </li>
         <ul class="navbar-nav my-2 my-lg-0">
           <%= if assigns[:current_user] do %>
-            <li> <%= link "Sign out", to: session_path(@conn, :delete, 1), method: "delete" %>
+            <li> <%= link "Sign out", to: session_path(@conn, :delete, 1), method: "delete", class: "nav-link" %>
             <li class="nav-item <%= active_path?(@conn, "users/new") %>">
           <% else %>
-              <a class="nav-link" href="<%= user_path(@conn, :new) %>">Rekisteröidy</a>
+              <a class="nav-link" href="<%= register_path(@conn, :new) %>">Rekisteröidy</a>
             </li>
             <li class="nav-item <%= active_path?(@conn, "sessions/new") %>">
               <a class="nav-link" href="<%= session_path(@conn, :new) %>">Kirjaudu sisään</a>
@@ -83,5 +85,6 @@
       </main>
     </div>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script src="<%= static_path(@conn, "/js/bundle.js") %>"></script>
   </body>
 </html>

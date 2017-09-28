@@ -7,9 +7,14 @@ defmodule LukimatWeb.AnswerControllerTest do
   @update_attrs %{answer: 43, is_correct: false}
   @invalid_attrs %{answer: nil, is_correct: nil}
 
+  setup context do
+    current_user = insert(:user)
+    conn = sign_in(context[:conn], current_user)
+    {:ok, conn: conn, current_user: current_user}
+  end
+
   def fixture(:answer) do
-    {:ok, answer} = Questionnaires.create_answer(@create_attrs)
-    answer
+    insert(:answer)
   end
 
   describe "index" do

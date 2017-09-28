@@ -38,7 +38,7 @@ exports.config = {
   // Phoenix paths configuration
   paths: {
     // Dependencies and current project directories to watch
-    watched: ['static', 'css', 'js', 'vendor'],
+    watched: ['elm', 'static', 'css', 'js', 'vendor'],
     // Where to compile files to
     public: '../priv/static',
   },
@@ -47,13 +47,20 @@ exports.config = {
   plugins: {
     babel: {
       // Do not use ES6 compiler in vendor code
-      ignore: [/vendor/],
+      ignore: [/vendor/, /elm/],
     },
     sass: {
       options: {
         includePaths: ['node_modules/bootstrap/scss'], // Tell sass-brunch where to look for files to @import
         precision: 8, // Minimum precision required by bootstrap-sass
       },
+    },
+    elmBrunch: {
+      elmFolder: 'elm',
+      mainModules: ['Main.elm'],
+      outputFolder: '../../priv/static/js',
+      outputFile: 'bundle.js',
+      makeParameters: ['--warn'],
     },
   },
 

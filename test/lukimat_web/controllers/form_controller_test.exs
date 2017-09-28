@@ -7,9 +7,14 @@ defmodule LukimatWeb.FormControllerTest do
   @update_attrs %{level: "some updated level", name: "some updated name"}
   @invalid_attrs %{level: nil, name: nil}
 
+  setup context do
+    current_user = insert(:user)
+    conn = sign_in(context[:conn], current_user)
+    {:ok, conn: conn, current_user: current_user}
+  end
+
   def fixture(:form) do
-    {:ok, form} = Questionnaire.create_form(@create_attrs)
-    form
+    insert(:form)
   end
 
   describe "index" do

@@ -1,9 +1,7 @@
-<h2>Vastaa</h2>
+<h2>Tee testi</h2>
 
-<ul>
-<%= for form <- @forms do %>
-  <li>
-    <%= link form.name, to: fill_form_path(@conn, :new, form.id), class: "btn btn-default btn-xs" %>
-  </li>
-<% end %>
-</ul>
+<div class="list-group">
+  <%= for form <- @forms do %>
+    <%= link form.name, to: fill_form_path(@conn, :new, form.id), class: "list-group-item list-group-item-action list-group-item-success" %></a>
+  <% end %>
+</div>

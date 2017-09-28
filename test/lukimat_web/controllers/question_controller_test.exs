@@ -7,9 +7,14 @@ defmodule LukimatWeb.QuestionControllerTest do
   @update_attrs %{choices: %{}, content: "some updated content", correct_answer: 43, level: "some updated level"}
   @invalid_attrs %{choices: nil, content: nil, correct_answer: nil, level: nil}
 
+  setup context do
+    current_user = insert(:user)
+    conn = sign_in(context[:conn], current_user)
+    {:ok, conn: conn, current_user: current_user}
+  end
+
   def fixture(:question) do
-    {:ok, question} = Questionnaires.create_question(@create_attrs)
-    question
+    insert(:question)
   end
 
   describe "index" do

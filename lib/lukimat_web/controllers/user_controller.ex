@@ -33,12 +33,16 @@ defmodule LukimatWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+    user = 
+      Accounts.get_user!(id)
+      |> Accounts.with_schools
     render(conn, "show.html", user: user)
   end
 
   def edit(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+    user =
+      Accounts.get_user!(id)
+      |> Accounts.with_schools
     changeset = Accounts.change_user(user)
     render(conn, "edit.html", user: user, changeset: changeset)
   end

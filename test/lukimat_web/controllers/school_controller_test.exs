@@ -7,9 +7,14 @@ defmodule LukimatWeb.SchoolControllerTest do
   @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
 
+  setup context do
+    current_user = insert(:user)
+    conn = sign_in(context[:conn], current_user)
+    {:ok, conn: conn, current_user: current_user}
+  end
+
   def fixture(:school) do
-    {:ok, school} = Schools.create_school(@create_attrs)
-    school
+    insert(:school)
   end
 
   describe "index" do

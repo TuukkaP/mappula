@@ -16,7 +16,6 @@ defmodule LukimatWeb.ChoiceController do
   end
 
   def create(conn, %{"choice" => choice_params}) do
-    #{upload, choice_params} = Map.pop(choice_params, "image") 
     case Questionnaires.create_choice(choice_params) do
       {:ok, choice} ->
         conn

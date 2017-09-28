@@ -1,4 +1,4 @@
-<h2>Vastaa</h2>
+<h2><%= @form.name %></h2>
 
 <%= form_for @conn, fill_form_path(@conn, :create, @form.id), [as: :answers], fn f -> %>
   <%= for question <- @form.questions do %>
@@ -8,10 +8,10 @@
           <div class="form-group">
             <%= for choice <- Enum.sort(question.choices, fn(p, c) -> p.id <= c.id end) do %>
               <%= if question.type == "multiple_choice" do %>
-                  <label class="form-check-label btn btn-primary">
+                  <label class="form-check-label">
                     <%= radio_button(q, String.to_atom(question.type), choice.content) %>
                     <%= choice.content %>
-                    <%= img_tag Lukimat.ChoiceImage.url({choice.image, choice}, :original) %>
+                    <%= img_tag Lukimat.ChoiceImage.url({choice.image, choice}, :original), height: "200px" %>
                   </label>
               <% end %>
             <% end %>
@@ -23,3 +23,6 @@
   <% end %>
   <%= submit "Submit" %>
 <% end %>
+
+<div id="elm_target">
+</div>

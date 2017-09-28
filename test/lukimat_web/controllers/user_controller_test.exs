@@ -3,13 +3,19 @@ defmodule LukimatWeb.UserControllerTest do
 
   alias Lukimat.Accounts
 
-  @create_attrs %{class: "some class", email: "some email", encrypted_password: "some encrypted_password", first_name: "some first_name", language: "some language", last_name: "some last_name", role: "some role"}
-  @update_attrs %{class: "some updated class", email: "some updated email", encrypted_password: "some updated encrypted_password", first_name: "some updated first_name", language: "some updated language", last_name: "some updated last_name", role: "some updated role"}
+  @create_attrs %{class: "some class", email: "test@example.org", password: "password", password_confirmation: "password", first_name: "some first_name", language: "some language", last_name: "some last_name", role: "some role"}
+  #@create_attrs %{class: "some class", email: "some email", encrypted_password: "some encrypted_password", first_name: "some first_name", language: "some language", last_name: "some last_name", role: "some role"}
+  @update_attrs %{class: "some updated class", email: "new_test@example.org", encrypted_password: "some updated encrypted_password", first_name: "some updated first_name", language: "some updated language", last_name: "some updated last_name", role: "some updated role"}
+ # @update_attrs %{class: "some updated class", email: "some updated email", encrypted_password: "some updated encrypted_password", first_name: "some updated first_name", language: "some updated language", last_name: "some updated last_name", role: "some updated role"}
   @invalid_attrs %{class: nil, email: nil, encrypted_password: nil, first_name: nil, language: nil, last_name: nil, role: nil}
 
+  setup context do
+    current_user = insert(:user)
+    {:ok, conn: sign_in(context[:conn], current_user), current_user: current_user}
+  end
+
   def fixture(:user) do
-    {:ok, user} = Accounts.create_user(@create_attrs)
-    user
+    insert(:user)
   end
 
   describe "index" do

@@ -20,6 +20,8 @@ defmodule LukimatWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       import LukimatWeb.Router.Helpers
+      import Lukimat.Factory
+      import LukimatWeb.GuardianHelper
 
       # The default endpoint for testing
       @endpoint LukimatWeb.Endpoint
@@ -34,5 +36,4 @@ defmodule LukimatWeb.ConnCase do
     end
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
-
 end

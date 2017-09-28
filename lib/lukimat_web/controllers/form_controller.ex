@@ -5,9 +5,9 @@ defmodule LukimatWeb.FormController do
   alias Lukimat.Questionnaires.Form
 
   def index(conn, _params) do
-    forms = 
+    forms =
       Questionnaires.list_forms()
-      |> Questionnaires.with_questions
+      |> Questionnaires.with_questions_and_choices
     render(conn, "index.html", forms: forms)
   end
 

@@ -27,6 +27,7 @@ defmodule Lukimat.Accounts.User do
     |> validate_required([:email, :language, :class, :role])
     |> validate_format(:email, ~r/@/)
     |> downcase_email
+    |> unique_constraint(:email)
     |> validate_length(:password, min: 6, max: 32)
     |> validate_confirmation(:password, message: "does not match password")
     |> encrypt_password

@@ -3,7 +3,7 @@ defmodule Lukimat.Questionnaires.Form do
   import Ecto.Changeset
   alias Lukimat.Questionnaires.Form
 
-
+  @derive {Poison.Encoder, except: [:__meta__]}
   schema "forms" do
     field :level, :string
     field :name, :string
