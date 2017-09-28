@@ -54,5 +54,6 @@ defmodule LukimatWeb.Router do
     pipe_through [:api, :guardian, :authenticated]
     resources "/forms", Api.FormController, only: [:show]
     resources "/forms/:form_id/questions", Api.QuestionController, only: [:index]
+    resources "/answers", Api.AnswerController, only: [:create]
   end
 end

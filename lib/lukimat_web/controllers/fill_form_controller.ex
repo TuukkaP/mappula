@@ -7,7 +7,7 @@ defmodule LukimatWeb.FillFormController do
   alias Lukimat.Questionnaires.Answer
 
   def index(conn, _params) do
-    forms = 
+    forms =
       Questionnaires.list_forms()
       |> Questionnaires.with_questions
     render(conn, "index.html", forms: forms)
@@ -23,7 +23,8 @@ defmodule LukimatWeb.FillFormController do
     IO.inspect params
     answers = build_answers(conn.assigns[:current_user], form, params)
     result = Lukimat.Repo.transaction(fn ->
-      Enum.each(answers, fn(answer) -> Lukimat.Repo.insert!(answer) end)
+      #Enum.each(answers, fn(answer) -> Lukimat.Repo.insert!(answer) end)
+      Enum.each(answers, fn(answer) -> Questionnaires.create_answer(answer) end)
     end )
     case result do
       {:ok, _value} ->
@@ -38,14 +39,13 @@ defmodule LukimatWeb.FillFormController do
   end
 
   defp build_answers(current_user, form, %{"answers" => answers}) do
-    Enum.map(form.questions, 
-      fn(%{id: id, type: type, correct_answer: correct_answer}) -> 
+    Enum.map(form.questions,
+      fn(%{id: id, type: type, correct_answer: correct_answer}) ->
         params_answer = answers["#{id}"]["#{type}"]
-        %Answer{
+        %{
           user_id: current_user.id,
           question_id: id,
           answer: params_answer,
-          is_correct: correct_answer?(correct_answer, params_answer)
         }
       end)
   end

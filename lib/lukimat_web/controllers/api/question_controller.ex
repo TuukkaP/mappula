@@ -1,5 +1,6 @@
 defmodule LukimatWeb.Api.QuestionController do
   use LukimatWeb, :controller
+  alias LukimatWeb.Guardian.Plug, as: GPlug
 
   alias Lukimat.Questionnaires
 

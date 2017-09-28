@@ -147,7 +147,7 @@ defmodule Lukimat.Questionnaires do
   """
   def create_answer(attrs \\ %{}) do
     %Answer{}
-    |> Answer.changeset(attrs)
+    |> Answer.create_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -165,7 +165,7 @@ defmodule Lukimat.Questionnaires do
   """
   def update_answer(%Answer{} = answer, attrs) do
     answer
-    |> Answer.changeset(attrs)
+    |> Answer.update_changeset(attrs)
     |> Repo.update()
   end
 
@@ -195,7 +195,8 @@ defmodule Lukimat.Questionnaires do
 
   """
   def change_answer(%Answer{} = answer) do
-    Answer.changeset(answer, %{})
+    answer
+    |> Answer.update_changeset(%{})
   end
 
   alias Lukimat.Questionnaires.Form
