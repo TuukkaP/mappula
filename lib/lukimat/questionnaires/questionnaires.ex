@@ -475,13 +475,8 @@ defmodule Lukimat.Questionnaires do
 
   """
   def create_form_answer(attrs \\ %{}) do
-    changeset =
     %FormAnswer{}
     |> FormAnswer.changeset(attrs)
-
-    IO.inspect changeset
-
-    changeset
     |> Repo.insert()
   end
 

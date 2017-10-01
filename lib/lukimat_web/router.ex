@@ -52,7 +52,7 @@ defmodule LukimatWeb.Router do
     get "/forms/:form_id/fill/completed", FillFormController, :completed
   end
 
-  scope "/api", LukimatWeb do
+  scope "/api", LukimatWeb, as: :api do
     pipe_through [:api, :guardian, :authenticated]
     resources "/forms", Api.FormController, only: [:show]
     resources "/forms/:form_id/questions", Api.QuestionController, only: [:index]
