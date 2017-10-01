@@ -9,7 +9,6 @@ defmodule Lukimat.Questionnaires.ChoiceTest do
     alias Lukimat.Questionnaires.Choice
 
     @valid_attrs %{content: "some content", url: "some url"}
-    #@valid_attrs %{content: "some content", url: "some url"}
     @update_attrs %{content: "some updated content", url: "some updated url"}
     @invalid_attrs %{content: nil, url: nil}
 

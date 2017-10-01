@@ -10,6 +10,7 @@ initialModel flags =
     , currentQuestion = Nothing
     , answers = []
     , origin = flags.origin
+    , path = flags.path
     }
 
 
@@ -30,7 +31,7 @@ type alias Question =
 
 
 type alias Choice =
-    { id : Int
+    { id : ChoiceId
     , questionId : QuestionId
     , content : String
     , url : Maybe String
@@ -39,6 +40,10 @@ type alias Choice =
 
 
 type alias QuestionId =
+    Int
+
+
+type alias ChoiceId =
     Int
 
 
@@ -52,8 +57,13 @@ type alias QuestionList =
 
 type alias Answer =
     { questionId : QuestionId
-    , answer : String
+    , answer : ChoiceId
     }
+
+
+
+{--TODO Change answers to WebData (List Answer) to support errors from backend
+--}
 
 
 type alias Model =
@@ -62,4 +72,5 @@ type alias Model =
     , currentQuestion : Maybe Question
     , answers : List Answer
     , origin : String
+    , path : String
     }

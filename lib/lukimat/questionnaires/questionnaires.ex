@@ -299,8 +299,16 @@ defmodule Lukimat.Questionnaires do
     Repo.preload forms, :questions
   end
 
+  def with_question(model) do
+    Repo.preload model, :question
+  end
+
   def with_questions_and_choices(form) do
     Repo.preload(form, [questions: [:choices]])
+  end
+
+  def with_question_and_choices(model) do
+    Repo.preload(model, [question: [:choices]])
   end
 
   def with_answers(%Question{} = question) do
@@ -309,6 +317,22 @@ defmodule Lukimat.Questionnaires do
 
   def with_choices(questions) do
     Repo.preload questions, :choices
+  end
+
+  def with_user(model) do
+    Repo.preload model, :user
+  end
+
+  def with_form(model) do
+    Repo.preload model, :form
+  end
+
+  def with_form_and_user(model) do
+    Repo.preload model, [:form, :user]
+  end
+
+  def with_form_and_user_and_answers(model) do
+    Repo.preload model, [:form, :user, [answers: [question: [:choices]]]]
   end
 
   alias Lukimat.Questionnaires.Choice
@@ -405,5 +429,106 @@ defmodule Lukimat.Questionnaires do
   """
   def change_choice(%Choice{} = choice) do
     Choice.changeset(choice, %{})
+  end
+
+  alias Lukimat.Questionnaires.FormAnswer
+
+  @doc """
+  Returns the list of form_answers.
+
+  ## Examples
+
+      iex> list_form_answers()
+      [%FormAnswer{}, ...]
+
+  """
+  def list_form_answers do
+    Repo.all(FormAnswer)
+  end
+
+  @doc """
+  Gets a single form_answer.
+
+  Raises `Ecto.NoResultsError` if the Form answer does not exist.
+
+  ## Examples
+
+      iex> get_form_answer!(123)
+      %FormAnswer{}
+
+      iex> get_form_answer!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_form_answer!(id), do: Repo.get!(FormAnswer, id)
+
+  @doc """
+  Creates a form_answer.
+
+  ## Examples
+
+      iex> create_form_answer(%{field: value})
+      {:ok, %FormAnswer{}}
+
+      iex> create_form_answer(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_form_answer(attrs \\ %{}) do
+    changeset =
+    %FormAnswer{}
+    |> FormAnswer.changeset(attrs)
+
+    IO.inspect changeset
+
+    changeset
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a form_answer.
+
+  ## Examples
+
+      iex> update_form_answer(form_answer, %{field: new_value})
+      {:ok, %FormAnswer{}}
+
+      iex> update_form_answer(form_answer, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_form_answer(%FormAnswer{} = form_answer, attrs) do
+    form_answer
+    |> FormAnswer.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a FormAnswer.
+
+  ## Examples
+
+      iex> delete_form_answer(form_answer)
+      {:ok, %FormAnswer{}}
+
+      iex> delete_form_answer(form_answer)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_form_answer(%FormAnswer{} = form_answer) do
+    Repo.delete(form_answer)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking form_answer changes.
+
+  ## Examples
+
+      iex> change_form_answer(form_answer)
+      %Ecto.Changeset{source: %FormAnswer{}}
+
+  """
+  def change_form_answer(%FormAnswer{} = form_answer) do
+    FormAnswer.changeset(form_answer, %{})
   end
 end

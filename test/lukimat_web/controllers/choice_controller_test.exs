@@ -35,10 +35,7 @@ defmodule LukimatWeb.ChoiceControllerTest do
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == choice_path(conn, :show, id)
 
-      IO.inspect conn
       conn = get conn, choice_path(conn, :show, id)
-      IO.inspect conn
-      IO.inspect Questionnaires.list_choices()
       assert html_response(conn, 200) =~ "Show Choice"
     end
 

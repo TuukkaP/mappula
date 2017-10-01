@@ -1,6 +1,6 @@
 defmodule Lukimat.UserTest do
   use Lukimat.DataCase
-  import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+  import Comeonin.Bcrypt, only: [checkpw: 2]
 
   alias Lukimat.Accounts
 

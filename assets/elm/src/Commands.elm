@@ -19,19 +19,12 @@ fetchQuestions origin path =
 
 fetchQuestionsUrl : String -> String -> String
 fetchQuestionsUrl origin path =
-    let
-        formId =
-            path
-                |> String.split "/"
-                |> List.drop 2
-                |> List.head
-    in
-        case formId of
-            Just id ->
-                origin ++ "/api/forms/" ++ id ++ "/questions"
+    case parseFormIdFromPath path of
+        Just id ->
+            origin ++ "/api/forms/" ++ id ++ "/questions"
 
-            Nothing ->
-                crash "Faulty form id"
+        Nothing ->
+            crash "Faulty form id"
 
 
 questionsDecoder : Decode.Decoder (List Question)
@@ -69,12 +62,17 @@ answerDecoder : Decode.Decoder Answer
 answerDecoder =
     JsonPipeline.decode Answer
         |> JsonPipeline.required "question_id" Decode.int
-        |> JsonPipeline.required "answer" Decode.string
+        |> JsonPipeline.required "answer" Decode.int
 
 
-saveAnswersUrl : String -> String
-saveAnswersUrl origin =
-    origin ++ "/api/answers"
+saveAnswersUrl : String -> String -> String
+saveAnswersUrl origin path =
+    case parseFormIdFromPath path of
+        Just id ->
+            origin ++ "/api/forms/" ++ id ++ "/answers"
+
+        Nothing ->
+            crash "Faulty form id"
 
 
 saveAnswersRequest : Model -> Http.Request (List Answer)
@@ -85,7 +83,7 @@ saveAnswersRequest model =
         , headers = []
         , method = "POST"
         , timeout = Nothing
-        , url = saveAnswersUrl model.origin
+        , url = saveAnswersUrl model.origin model.path
         , withCredentials = False
         }
 
@@ -99,8 +97,22 @@ saveAnswerCmd model =
 answersEncoder : List Answer -> Encode.Value
 answersEncoder answers =
     let
+        questionAttribute answer =
+            Encode.object
+                [ ( "question_id", Encode.int answer.questionId )
+                , ( "answer", Encode.int answer.answer )
+                ]
+
         attributes =
             answers
-                |> List.map (\answer -> Encode.object [ ( "question_id", Encode.int answer.questionId ), ( "answer", Encode.string answer.answer ) ])
+                |> List.map questionAttribute
     in
-        Encode.list attributes
+        Encode.object [ ( "answers", Encode.list attributes ) ]
+
+
+parseFormIdFromPath : String -> Maybe String
+parseFormIdFromPath path =
+    path
+        |> String.split "/"
+        |> List.drop 2
+        |> List.head

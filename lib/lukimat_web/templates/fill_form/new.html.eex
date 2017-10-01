@@ -1,7 +1,3 @@
-<script>
-window.formId = 123;
-</script>
-
 <h2><%= @form.name %></h2>
 
 <div id="elm_form">

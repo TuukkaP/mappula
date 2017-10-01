@@ -5,6 +5,7 @@ defmodule LukimatWeb.FillFormController do
   alias Lukimat.Questionnaires
   alias Lukimat.Questionnaires.Form
   alias Lukimat.Questionnaires.Answer
+  alias Lukimat.Questionnaires.FormAnswer
 
   def index(conn, _params) do
     forms =
@@ -20,21 +21,14 @@ defmodule LukimatWeb.FillFormController do
 
   def create(conn, %{"form_id" => form_id} = params) do
     form = load_form(form_id)
-    IO.inspect params
-    answers = build_answers(conn.assigns[:current_user], form, params)
-    result = Lukimat.Repo.transaction(fn ->
-      #Enum.each(answers, fn(answer) -> Lukimat.Repo.insert!(answer) end)
-      Enum.each(answers, fn(answer) -> Questionnaires.create_answer(answer) end)
-    end )
-    case result do
+    form_answer_attrs = build_form_answer(conn.assigns[:current_user], form, params)
+    case Questionnaires.create_form_answer(form_answer_attrs) do
       {:ok, _value} ->
-        IO.inspect _value
         conn
         |> put_flash(:info, "Answer created successfully.")
         |> redirect(to: answer_path(conn, :index))
-      {:error, _value} ->
-        IO.inspect _value
-        render(conn, :new, form: form, answers: answers)
+      {:error, value} ->
+        render(conn, :new, form: form, answers: value)
     end
   end
 
@@ -43,24 +37,22 @@ defmodule LukimatWeb.FillFormController do
       |> put_flash(:info, "Answer created successfully.")
       |> redirect(to: fill_form_path(conn, :index))
   end
-  defp build_answers(current_user, form, %{"answers" => answers}) do
-    Enum.map(form.questions,
-      fn(%{id: id, type: type, correct_answer: correct_answer}) ->
-        params_answer = answers["#{id}"]["#{type}"]
-        %{
-          user_id: current_user.id,
-          question_id: id,
-          answer: params_answer,
-        }
+
+  defp build_form_answer(current_user, form, %{"answers" => answers}) do
+    answers = Enum.map(form.questions,
+      fn(%{id: id, type: type}) ->
+        %{question_id: id, answer: answers["#{id}"]["#{type}"]}
       end)
+
+    %FormAnswer{
+      user_id: current_user.id,
+      form_id: form.id,
+      answers: answers
+    }
   end
 
   defp load_form(form_id) do
     Questionnaires.get_form!(form_id)
     |> Questionnaires.with_questions_and_choices
-  end
-
-  defp correct_answer?(expected, actual) do
-    String.downcase(expected) == String.downcase(actual)
   end
 end

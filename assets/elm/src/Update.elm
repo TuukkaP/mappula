@@ -11,9 +11,10 @@ import Navigation exposing (load)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Messages.OnFetchQuestions questions ->
-            ( bootstrapQuestions model questions, Cmd.none )
+        Messages.OnFetchQuestions response ->
+            ( bootstrapQuestions { model | response = response } response, Cmd.none )
 
+        -- Currently answer is created in the next question which is not a good place, TODO refactor
         Messages.Choose choice ->
             let
                 next =
@@ -79,7 +80,7 @@ nextQuestion model choice =
             List.tail questions
 
         newModel =
-            { model | answers = model.answers ++ [ Answer choice.questionId choice.content ] }
+            { model | answers = model.answers ++ [ Answer choice.questionId choice.id ] }
     in
         case questionsTail of
             Just questions ->

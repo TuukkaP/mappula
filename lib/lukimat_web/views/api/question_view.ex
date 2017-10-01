@@ -3,6 +3,8 @@ defmodule LukimatWeb.Api.QuestionView do
   import LukimatWeb.Api.Serializer
 
   def render("index.json", %{questions: questions}) do
-    questions_to_json(questions)
+    questions
+    |> Enum.sort_by(&(&1.id))
+    |> questions_to_json
   end
 end

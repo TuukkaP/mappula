@@ -48,6 +48,7 @@ defmodule LukimatWeb.Router do
     resources "/forms", FormController
     resources "/fill", FillFormController, only: [:index]
     resources "/forms/:form_id/fill", FillFormController, only: [:new, :create, :completed]
+    resources "/form_answers", FormAnswerController, except: [:edit, :update]
     get "/forms/:form_id/fill/completed", FillFormController, :completed
   end
 
@@ -55,7 +56,6 @@ defmodule LukimatWeb.Router do
     pipe_through [:api, :guardian, :authenticated]
     resources "/forms", Api.FormController, only: [:show]
     resources "/forms/:form_id/questions", Api.QuestionController, only: [:index]
-    resources "/answers", Api.AnswerController, only: [:create]
-    resources "/forms/:form_id/fill", Api.AnswerController, only: [:create]
+    resources "/forms/:form_id/answers", Api.AnswerController, only: [:create]
   end
 end

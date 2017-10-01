@@ -5,7 +5,7 @@
     <tr>
       <th>ID</th>
       <th>Question ID</th>
-      <th>User ID</th>
+      <th>Form answer ID</th>
       <th>Answer</th>
       <th>Is correct</th>
       <th>Updated at</th>
@@ -18,7 +18,7 @@
     <tr>
       <td><%= answer.id %></td>
       <td><%= answer.question_id %></td>
-      <td><%= answer.user_id %></td>
+      <td><%= answer.form_answer_id%></td>
       <td><%= answer.answer %></td>
       <td><%= answer.is_correct %></td>
       <td><%= answer.updated_at %></td>

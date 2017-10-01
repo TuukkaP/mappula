@@ -11,6 +11,7 @@ defmodule LukimatWeb.Api.QuestionController do
       |> Questionnaires.with_questions_and_choices
     render(conn, "index.json", questions: form.questions)
   end
+
   def create(conn, %{"_json" => params}) do
     answers = build_answers(conn.assigns[:current_user], params)
     result = Lukimat.Repo.transaction(fn ->

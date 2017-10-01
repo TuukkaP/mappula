@@ -20,7 +20,9 @@ defmodule Lukimat.Questionnaires.Question do
   @doc false
   def changeset(%Question{} = question, attrs) do
     question
-    |> cast(attrs, [:form_id, :content, :correct_answer, :type, :audio])
-    |> validate_required([:form_id, :content, :correct_answer, :type])
+    |> cast(attrs, [:content, :correct_answer, :type, :audio])
+    |> assoc_constraint(:form)
+    |> validate_required([:content, :correct_answer, :type])
+    |> cast_assoc(:choices)
   end
 end

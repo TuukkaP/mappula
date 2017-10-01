@@ -8,22 +8,31 @@ defmodule Lukimat.Questionnaires.Answer do
 
 
   schema "answers" do
-    field :answer, :string
+    field :answer, :integer
     field :is_correct, :boolean, default: false
 
     timestamps()
-    belongs_to :user, Lukimat.Accounts.User
+    belongs_to :form_answer, Lukimat.Questionnaires.FormAnswer
     belongs_to :question, Lukimat.Questionnaires.Question
+    has_one :user, through: [:form_answer, :user]
   end
 
   @doc false
+  def changeset(%Answer{} = answer, attrs) do
+    create_changeset(answer, attrs)
+  end
+
   def create_changeset(%Answer{} = answer, attrs) do
-    question = Questionnaires.get_question!(attrs.question_id)
+    question =
+      Questionnaires.get_question!(attrs[:question_id] || attrs["question_id"])
+      |> Questionnaires.with_choices
     changeset(question, answer, attrs)
   end
 
   def update_changeset(%Answer{} = answer, attrs) do
-    question = Questionnaires.get_question!(answer.question_id)
+    question =
+      Questionnaires.get_question!(answer.question_id)
+      |> Questionnaires.with_choices
     changeset(question, answer, attrs)
   end
 
@@ -34,6 +43,7 @@ defmodule Lukimat.Questionnaires.Answer do
     |> validate_required([:answer])
     |> put_assoc(:question, question)
     |> put_is_correct(question)
+    |> validate_answer_choice(question)
     |> validate_required([:answer, :is_correct])
   end
 
@@ -47,4 +57,24 @@ defmodule Lukimat.Questionnaires.Answer do
     end
   end
 
+  defp validate_answer_choice(changeset, question) do
+    if question.type == "multiple_choice" do
+
+      validate_change(changeset, :answer, fn (:answer, answer) ->
+        choice_found? =
+          question.choices
+          |> Enum.map(fn(choice) -> choice.id end)
+          |> Enum.member?(answer)
+
+        if choice_found? do
+            []
+        else
+          [answer: "choice does not exist"]
+        end
+      end)
+
+    else
+      changeset
+    end
+  end
 end

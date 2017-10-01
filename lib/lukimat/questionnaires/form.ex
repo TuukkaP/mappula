@@ -3,14 +3,14 @@ defmodule Lukimat.Questionnaires.Form do
   import Ecto.Changeset
   alias Lukimat.Questionnaires.Form
 
-  @derive {Poison.Encoder, except: [:__meta__]}
   schema "forms" do
     field :level, :string
     field :name, :string
 
     timestamps()
 
-    has_many :questions, Lukimat.Questionnaires.Question
+    has_many :questions, Lukimat.Questionnaires.Question, on_delete: :delete_all
+    has_many :form_answers, Lukimat.Questionnaires.FormAnswer, on_delete: :delete_all
   end
 
   @doc false
@@ -18,5 +18,6 @@ defmodule Lukimat.Questionnaires.Form do
     form
     |> cast(attrs, [:level, :name])
     |> validate_required([:level, :name])
+    |> cast_assoc(:questions)
   end
 end

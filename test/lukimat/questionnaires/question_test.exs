@@ -1,6 +1,5 @@
 defmodule Lukimat.Questionnaires.QuestionTest do
   use Lukimat.DataCase
-  require IEx
 
   alias Lukimat.Questionnaires
 

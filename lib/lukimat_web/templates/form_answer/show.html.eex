@@ -1,0 +1,7 @@
+<h2>Show Form answer</h2>
+
+<ul>
+
+</ul>
+
+<span><%= link "Back", to: form_answer_path(@conn, :index) %></span>
