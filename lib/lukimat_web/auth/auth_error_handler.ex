@@ -5,7 +5,6 @@ defmodule LukimatWeb.AuthErrorHandlerController do
     case get_format(conn) do
       "html" ->
         conn
-        |> put_status(401)
         |> put_flash(:error, "You must be signed in to access that page.")
         |> redirect(to: session_path(conn, :new))
       _ ->
