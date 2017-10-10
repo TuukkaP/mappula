@@ -1,5 +1,9 @@
 defmodule LukimatWeb.Guardian do
-  use Guardian, otp_app: :lukimat
+  use Guardian, otp_app: :lukimat,
+    permissions: %{
+      user: [:admin, :student, :teacher],
+    }
+  use Guardian.Permissions.Bitwise
   alias Lukimat.Repo
   alias Lukimat.Accounts.User
   require IEx
@@ -27,5 +31,23 @@ defmodule LukimatWeb.Guardian do
 
   def resource_from_claims(_) do
     {:error, :invalid_claims}
+  end
+
+  def build_claims(claims, resource, opts) do
+    claims =
+      claims
+          |> encode_permissions_into_claims!(user_permissions(resource))
+    {:ok, claims}
+  end
+
+  def user_permissions(%{role: role}) do
+    permissions =
+      case role do
+        "student" -> [:student]
+        "teacher" -> [:teacher]
+        "admin" -> [:admin]
+        _ -> []
+      end
+    %{ user: permissions }
   end
 end

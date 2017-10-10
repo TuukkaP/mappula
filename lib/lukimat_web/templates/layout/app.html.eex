@@ -22,7 +22,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
-          <%= if assigns[:current_user] && assigns[:current_user].role == "admin" do %>
+          <%= if assigns[:current_user] && assigns[:current_user].role == "teacher" do %>
             <ul class="navbar-nav mr-auto">
               <li class="nav-item <%= active_path?(@conn, "users") %>">
                 <a class="nav-link" href="<%= user_path(@conn, :index) %>">Käyttäjät<span class="sr-only">(current)</span></a>

@@ -6,7 +6,7 @@ defmodule LukimatWeb.SessionController do
   alias Lukimat.Repo
   alias Lukimat.Accounts.User
   alias LukimatWeb.Guardian.Plug, as: GuardianPlug
-  
+
   plug :scrub_params, "session" when action in ~w(create)a
 
   def new(conn, _) do
@@ -43,11 +43,12 @@ defmodule LukimatWeb.SessionController do
     end
   end
 
+  # TODO put_flash doesnt work with logout???
   def delete(conn, _) do
     conn
     |> logout
     |> put_flash(:info, "See you later!")
-    |> redirect(to: page_path(conn, :index))
+    |> redirect(to: session_path(conn, :new))
   end
 
   defp logout(conn) do
