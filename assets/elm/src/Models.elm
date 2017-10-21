@@ -26,6 +26,7 @@ type alias Question =
     , content : String
     , correctAnswer : String
     , questionType : String
+    , audio : Maybe String
     , choices : List Choice
     }
 

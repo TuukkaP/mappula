@@ -40,6 +40,7 @@ questionDecoder =
         |> JsonPipeline.required "content" Decode.string
         |> JsonPipeline.required "correct_answer" Decode.string
         |> JsonPipeline.required "question_type" Decode.string
+        |> JsonPipeline.required "audio" (Decode.nullable Decode.string)
         |> JsonPipeline.required "choices" (Decode.list choiceDecoder)
 
 
