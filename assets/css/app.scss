@@ -1,8 +1,54 @@
 /* This file is for your main application css. */
 @import "node_modules/bootstrap/scss/bootstrap";
+@import "variables";
+
+body {
+  background-color: $white-smoke;
+}
 
 .container {
-	&-main {
-		margin-top: 2.5em;
-	}
+  &-main {
+    margin-top: 2.5em;
+    background-color: $white-smoke;
+  }
+}
+
+.jumbotron {
+  &-main {
+    background-color: white;
+  }
+
+  &-welcome {
+    background-color: $orange-yellow;
+  }
+}
+
+.navbar {
+  &-main {
+    background-color: $bondi-blue;
+  }
+}
+
+.list {
+  &-unstyled {
+    list-style: none;
+  }
+}
+
+.mappula {
+  &-logo {
+    background-color: $orange-yellow;
+    color: $bondi-blue;
+  }
+}
+
+.text {
+  &-orange {
+    color: $tart-orange;
+  }
+}
+
+.btn {
+  &-fill {
+  }
 }

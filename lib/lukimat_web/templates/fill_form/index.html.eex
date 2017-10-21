@@ -1,4 +1,4 @@
-<h2>Tee testi</h2>
+<h2>Valitse testi</h2>
 
 <div class="list-group">
   <%= for form <- @forms do %>

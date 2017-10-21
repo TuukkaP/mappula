@@ -13,17 +13,17 @@
 
   <body>
     <div class="container container-main">
-      <nav class="navbar navbar-expand-lg bg-primary navbar-dark rounded">
+      <nav class="navbar navbar-expand-lg navbar-main navbar-dark rounded">
         <a class="navbar-brand" href="/">
-          <span class="badge badge-secondary d-inline-block align-top" style="background-color: #FFA62F;">Ä</span>
-          Äppylä
+          <span class="badge badge-secondary d-inline-block mappula-logo">M</span>
+          Mappula
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
           <%= if assigns[:current_user] && assigns[:current_user].role == "teacher" do %>
-            <ul class="navbar-nav mr-auto">
               <li class="nav-item <%= active_path?(@conn, "users") %>">
                 <a class="nav-link" href="<%= user_path(@conn, :index) %>">Käyttäjät<span class="sr-only">(current)</span></a>
               </li>
@@ -42,12 +42,11 @@
               <li class="nav-item <%= active_path?(@conn, "choices") %>">
                 <a class="nav-link" href="<%= choice_path(@conn, :index) %>">Vastausvaihtoehdot</a>
               </li>
-            </ul>
           <% end %>
-          <ul class="navbar-nav my-2 my-lg-0">
+          </ul>
+          <ul class="navbar-nav my-2 my-lg-0 justify-content-end">
             <%= if assigns[:current_user] do %>
-              <li> <%= link "Sign out", to: session_path(@conn, :delete, 1), method: "delete", class: "nav-link" %>
-              <li class="nav-item <%= active_path?(@conn, "users/new") %>">
+              <li> <%= link "Kirjaudu ulos", to: session_path(@conn, :delete, 1), method: "delete", class: "nav-link" %>
             <% else %>
                 <a class="nav-link" href="<%= register_path(@conn, :new) %>">Rekisteröidy</a>
               </li>
@@ -79,7 +78,7 @@
           <! --- nothing --- !>
       <% end %>
 
-      <main role="main" class="jumbotron bg-light mt-4">
+      <main role="main" class="jumbotron jumbotron-main mt-4">
         <%= render @view_module, @view_template, assigns %>
       </main>
     </div>

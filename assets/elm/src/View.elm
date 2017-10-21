@@ -20,7 +20,9 @@ maybeQuestion model =
             renderQuestion question
 
         Nothing ->
-            img [ src (model.origin ++ "/images/loading.gif") ] []
+            div [ class "mx-auto", style [ ( "width", "200px" ) ] ]
+                [ i [ class "fa fa-cog fa-spin fa-5x fa-fw" ] []
+                ]
 
 
 renderQuestion : Question -> Html Msg
