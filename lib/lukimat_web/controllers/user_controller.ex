@@ -9,7 +9,7 @@ defmodule LukimatWeb.UserController do
   plug :assign_schools, only: [:new, :edit, :create, :edit]
 
   def index(conn, _params) do
-    users = 
+    users =
       Accounts.list_users()
       |> Accounts.with_schools
 
@@ -22,6 +22,10 @@ defmodule LukimatWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
+    if conn.request_path == "/register" do
+      user_params = Map.put(user_params, "role", "student")
+    end
+
     case Accounts.create_user(user_params) do
       {:ok, user} ->
         conn
@@ -33,7 +37,7 @@ defmodule LukimatWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = 
+    user =
       Accounts.get_user!(id)
       |> Accounts.with_schools
     render(conn, "show.html", user: user)

@@ -26,7 +26,7 @@ defmodule LukimatWeb.FillFormController do
       {:ok, _value} ->
         conn
         |> put_flash(:info, "Answer created successfully.")
-        |> redirect(to: answer_path(conn, :index))
+        |> redirect(to: page_path(conn, :index))
       {:error, value} ->
         render(conn, :new, form: form, answers: value)
     end
@@ -35,7 +35,7 @@ defmodule LukimatWeb.FillFormController do
   def completed(conn, _params) do
       conn
       |> put_flash(:info, "Answer created successfully.")
-      |> redirect(to: fill_form_path(conn, :index))
+      |> redirect(to: page_path(conn, :index))
   end
 
   defp build_form_answer(current_user, form, %{"answers" => answers}) do

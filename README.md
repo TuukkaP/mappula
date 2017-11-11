@@ -1,4 +1,4 @@
-# Lukimat
+# Mappula
 
 To start your Phoenix server:
 

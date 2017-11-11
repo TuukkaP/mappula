@@ -18,7 +18,7 @@ defmodule LukimatWeb.Api.Serializer do
         content: question.content,
         correct_answer: question.correct_answer,
         question_type: question.type,
-        audio: question.audio,
+        audio: Lukimat.QuestionAudio.url({question.audio, question}, :original),
         inserted_at: question.inserted_at,
         updated_at: question.updated_at,
         choices: choices_to_json(question.choices)

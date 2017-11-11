@@ -24,7 +24,7 @@ defmodule Lukimat.Accounts.User do
   def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:first_name, :last_name, :email, :language, :password, :password_confirmation, :class, :role, :school_id])
-    |> validate_required([:email, :language, :class, :role])
+    |> validate_required([:email, :password, :password_confirmation, :language, :class, :role])
     |> validate_format(:email, ~r/@/)
     |> downcase_email
     |> unique_constraint(:email)

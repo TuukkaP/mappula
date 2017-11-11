@@ -40,6 +40,8 @@ defmodule LukimatWeb do
       import LukimatWeb.Router.Helpers
       import LukimatWeb.ErrorHelpers
       import LukimatWeb.Gettext
+      import LukimatWeb.ViewHelpers
+      import LukimatWeb.InputHelpers
     end
   end
 
