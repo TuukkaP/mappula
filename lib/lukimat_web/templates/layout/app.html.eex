@@ -83,6 +83,5 @@
       </main>
     </div>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-    <script src="<%= static_path(@conn, "/js/bundle.js") %>"></script>
   </body>
 </html>
