@@ -12,7 +12,7 @@
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
-import Elm from './bundle';
+import Elm from './bundle.js';
 
 // Import local files
 //
