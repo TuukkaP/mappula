@@ -58,7 +58,7 @@ exports.config = {
     elmBrunch: {
       elmFolder: 'elm',
       mainModules: ['src/Main.elm'],
-      outputFolder: '../../priv/static/js',
+      outputFolder: '../js',
       outputFile: 'bundle.js',
       makeParameters: ['--warn'],
     },
