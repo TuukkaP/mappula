@@ -16,12 +16,30 @@ use Mix.Config
 config :lukimat, LukimatWeb.Endpoint,
   load_from_system_env: true,
   url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  cache_static_manifest: "priv/static/manifest.json",
+  secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 # Do not print debug messages in production
 config :logger, level: :info
 
 # ## SSL Support
+#
+
+# Based on https://medium.com/@yasserhussain1110/how-to-deploy-phoenix-app-to-heroku-95d4bef32322
+url: [scheme: "https", host: "mappula.herokuapp.com", port: 443],
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
+
+# Configure your database
+config :lukimat, Lukimat.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: System.get_env("DATABASE_URL"),
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+  ssl: true
+
+config :lukimat, Lukimat.Accounts.Guardian,
+       issuer: "Lukimat.#{Mix.env}",
+       secret_key: System.get_env("GUARDIAN_SECRET_KEY")
+#
 #
 # To get SSL working, you will need to add the `https` key
 # to the previous section and set your `:url` port to 443:
@@ -41,8 +59,8 @@ config :logger, level: :info
 # We also recommend setting `force_ssl`, ensuring no data is
 # ever sent via http, always redirecting to https:
 #
-#     config :lukimat, LukimatWeb.Endpoint,
-#       force_ssl: [hsts: true]
+     config :lukimat, LukimatWeb.Endpoint,
+       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
@@ -61,4 +79,4 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-import_config "prod.secret.exs"
+#import_config "prod.secret.exs"
