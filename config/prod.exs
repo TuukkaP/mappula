@@ -15,7 +15,8 @@ use Mix.Config
 # which you typically run after static files are built.
 config :lukimat, LukimatWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "example.com", port: 80],
+  url: [scheme: "https", host: "mappula.herokuapp.com", port: 443],
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
@@ -26,8 +27,6 @@ config :logger, level: :info
 #
 
 # Based on https://medium.com/@yasserhussain1110/how-to-deploy-phoenix-app-to-heroku-95d4bef32322
-url: [scheme: "https", host: "mappula.herokuapp.com", port: 443],
-  force_ssl: [rewrite_on: [:x_forwarded_proto]],
 
 # Configure your database
 config :lukimat, Lukimat.Repo,
