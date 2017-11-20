@@ -1,23 +1,18 @@
-defmodule Lukimat.ChoiceImage do
+defmodule Lukimat.QuestionAudio do
   use Arc.Definition
 
   # Include ecto support (requires package arc_ecto installed):
-   use Arc.Ecto.Definition
-
-  # @versions [:original]
-
-  # To add a thumbnail version:
-  @versions [:original, :thumb]
+  use Arc.Ecto.Definition
 
   # Whitelist file extensions:
    def validate({file, _}) do
-     ~w(.jpg .jpeg .gif .png) |> Enum.member?(Path.extname(file.file_name))
+     ~w(.wav .mp3) |> Enum.member?(Path.extname(file.file_name))
    end
 
   # Define a thumbnail transformation:
-  def transform(:thumb, _) do
-    {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
-  end
+  #def transform(:thumb, _) do
+  #  {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
+  #end
 
   def filename(version, {file, _scope}) do
   file_name = Path.basename(file.file_name, Path.extname(file.file_name))
@@ -25,7 +20,7 @@ defmodule Lukimat.ChoiceImage do
   end
 
   def storage_dir(_version, {_file, _scope}) do
-    "uploads/choices/"
+    "uploads/questions/"
   end
   # Override the persisted filenames:
   # def filename(version, _) do

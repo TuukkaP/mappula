@@ -38,6 +38,14 @@ config :lukimat, Lukimat.Repo,
 config :lukimat, Lukimat.Accounts.Guardian,
        issuer: "Lukimat.#{Mix.env}",
        secret_key: System.get_env("GUARDIAN_SECRET_KEY")
+
+config :arc,
+  storage: Arc.Storage.S3,
+  bucket: System.get_env("AWS_S3_BUCKET")
+
+config :ex_aws,
+  access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY")
 #
 #
 # To get SSL working, you will need to add the `https` key
@@ -58,8 +66,7 @@ config :lukimat, Lukimat.Accounts.Guardian,
 # We also recommend setting `force_ssl`, ensuring no data is
 # ever sent via http, always redirecting to https:
 #
-     config :lukimat, LukimatWeb.Endpoint,
-       force_ssl: [hsts: true]
+config :lukimat, LukimatWeb.Endpoint, force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
