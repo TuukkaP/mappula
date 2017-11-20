@@ -5,6 +5,7 @@ import Html.Attributes exposing (name, style, type_, class, src, classList, clas
 import Html.Events exposing (onClick)
 import Models exposing (Model, Choice, Question)
 import Messages exposing (Msg)
+import Debug exposing (log)
 
 
 view : Model -> Html Msg
@@ -31,7 +32,10 @@ renderQuestion question =
         audioElement =
             case question.audio of
                 Just url ->
-                    audio [ (autoplay True), src url ] []
+                    log url
+                        audio
+                        [ (autoplay True), src url ]
+                        []
 
                 Nothing ->
                     i [ class "fa fa-ban fa-stack-2x text-danger" ] []
@@ -63,7 +67,10 @@ choiceButton choice =
         choiceContent =
             case choice.image of
                 Just url ->
-                    img [ src url, style [ ( "max-width", "100%" ), ( "max-height", "300px" ) ] ] []
+                    log url
+                        img
+                        [ src url, style [ ( "max-width", "100%" ), ( "max-height", "300px" ) ] ]
+                        []
 
                 Nothing ->
                     text choice.content

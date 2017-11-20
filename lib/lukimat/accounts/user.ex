@@ -16,7 +16,7 @@ defmodule Lukimat.Accounts.User do
     field :role, :string
 
     timestamps()
-    has_many :answers, Lukimat.Questionnaires.Answer
+    has_many :form_answers, Lukimat.Questionnaires.FormAnswer
     belongs_to :school, Lukimat.Schools.School
   end
 

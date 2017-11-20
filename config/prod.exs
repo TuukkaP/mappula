@@ -41,7 +41,8 @@ config :lukimat, Lukimat.Accounts.Guardian,
 
 config :arc,
   storage: Arc.Storage.S3,
-  bucket: System.get_env("AWS_S3_BUCKET")
+  bucket: System.get_env("AWS_S3_BUCKET"),
+  virtual_host: true
 
 config :ex_aws,
   access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
