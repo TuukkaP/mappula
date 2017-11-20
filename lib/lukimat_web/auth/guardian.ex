@@ -1,5 +1,7 @@
 defmodule LukimatWeb.Guardian do
   use Guardian, otp_app: :lukimat,
+    ttl: { 5, :hours},
+    verify_issuer: true,
     permissions: %{
       user: [:admin, :student, :teacher],
     }

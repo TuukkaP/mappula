@@ -22,9 +22,12 @@ defmodule LukimatWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    if conn.request_path == "/register" do
-      user_params = Map.put(user_params, "role", "student")
-    end
+    user_params=
+      if conn.request_path == "/register" do
+        Map.put(user_params, "role", "student")
+      else
+        user_params
+      end
 
     case Accounts.create_user(user_params) do
       {:ok, user} ->

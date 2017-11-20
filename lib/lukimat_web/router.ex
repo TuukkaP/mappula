@@ -37,7 +37,7 @@ defmodule LukimatWeb.Router do
   end
 
   scope "/", LukimatWeb do
-    pipe_through [:browser, :guardian]
+    pipe_through [:browser]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     get "/register", UserController, :new, as: :register
     post "/register", UserController, :create, as: :register
